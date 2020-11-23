@@ -1,0 +1,34 @@
+{
+    "name": "villaflor/laravel-cloudflare",
+    "description": "A Laravel client library for accessing Cloudflare APIs",
+    "keywords": [
+        "laravel",
+        "cloudflare",
+        "api"
+    ],
+    "homepage": "https://github.com/villaflor/laravel-cloudflare",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mark Anthony M. Villaflor",
+            "email": "villaflor@live.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Villaflor\\Cloudflare\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Villaflor\\Cloudflare\\Tests\\": "tests/"
+        }
+    }
+}
