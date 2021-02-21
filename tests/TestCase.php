@@ -4,16 +4,18 @@
 namespace Villaflor\Cloudflare\Tests;
 
 
+use Illuminate\Foundation\Application;
+
 class TestCase extends \Orchestra\Testbench\TestCase
 {
     /**
      * Override application aliases.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param Application $app
      *
      * @return array
      */
-    protected function getPackageProviders($app)
+    protected function getPackageProviders(Application $app): array
     {
         return [];
     }

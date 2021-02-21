@@ -4,7 +4,8 @@
     "keywords": [
         "laravel",
         "cloudflare",
-        "api"
+        "api",
+        "villaflor"
     ],
     "homepage": "https://github.com/villaflor/laravel-cloudflare",
     "type": "library",
@@ -16,10 +17,11 @@
         }
     ],
     "require": {
-        "php": "^7.3"
+        "php": "^7.3|^8.0",
+        "cloudflare/sdk": "^1.1"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.4"
+        "orchestra/testbench": "^6.12"
     },
     "autoload": {
         "psr-4": {
@@ -29,6 +31,13 @@
     "autoload-dev": {
         "psr-4": {
             "Villaflor\\Cloudflare\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Villaflor\\Cloudflare\\CloudflareServiceProvider"
+            ]
         }
     }
 }
