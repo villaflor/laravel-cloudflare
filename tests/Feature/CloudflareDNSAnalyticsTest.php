@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * Created by Visual Studio Code.
+ * User: elliot.alderson
+ * Date: 10/02/2020
+ * Time: 04:28 AM
+ */
+
+namespace Villaflor\Cloudflare\Tests\Feature;
+
+
+use Cloudflare\API\Adapter\Adapter;
+use Cloudflare\API\Endpoints\DNSAnalytics;
+use Villaflor\Cloudflare\Tests\TestCase;
+
+class CloudflareDNSAnalyticsTest extends TestCase
+{
+    public function testGetDNSAnalyticsReportTable()
+    {
+        $response = $this->getPsr7JsonResponseForFixture('getDNSAnalyticsReportTable.json');
+
+        $mock = $this->getMockBuilder(Adapter::class)->disableOriginalConstructor()->getMock();
+        $mock->method('get')->willReturn($response);
+
+        $mock->expects($this->once())->method('get')
+            ->with($this->equalTo('zones/023e105f4ecef8ad9ca31a8372d0c353/dns_analytics/report'));
+
+        $analytics = new DNSAnalytics($mock);
+        $since = '2020-02-01T00:00:00Z';
+        $until = '2020-02-28T23:59:59Z';
+        $filters = 'responseCode==NOERROR AND queryType==A';
+
+        $result = $analytics->getReportTable(
+            '023e105f4ecef8ad9ca31a8372d0c353',
+            ['queryName', 'queryType', 'responseCode'],
+            ['queryCount'],
+            ['-queryCount'],
+            $filters,
+            $since,
+            $until
+        );
+
+        $this->assertEquals(1, $result->rows);
+        $this->assertEquals($since, $result->query->since);
+        $this->assertEquals($until, $result->query->until);
+    }
+
+    public function testGetDNSAnalyticsReportByTime()
+    {
+        $response = $this->getPsr7JsonResponseForFixture('getDNSAnalyticsReportByTime.json');
+
+        $mock = $this->getMockBuilder(Adapter::class)->disableOriginalConstructor()->getMock();
+        $mock->method('get')->willReturn($response);
+
+        $mock->expects($this->once())->method('get')
+            ->with($this->equalTo('zones/023e105f4ecef8ad9ca31a8372d0c353/dns_analytics/report/bytime'));
+
+        $analytics = new DNSAnalytics($mock);
+        $since = '2020-02-01T00:00:00Z';
+        $until = '2020-02-28T23:59:59Z';
+        $filters = 'responseCode==NOERROR AND queryType==A';
+
+        $result = $analytics->getReportByTime(
+            '023e105f4ecef8ad9ca31a8372d0c353',
+            ['queryName', 'queryType', 'responseCode'],
+            ['queryCount'],
+            ['-queryCount'],
+            $filters,
+            $since,
+            $until,
+            2
+        );
+
+        $this->assertEquals(2, $result->rows);
+        $this->assertEquals($since, $result->query->since);
+        $this->assertEquals($until, $result->query->until);
+    }
+}
