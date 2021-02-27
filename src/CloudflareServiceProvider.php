@@ -5,7 +5,6 @@ namespace Villaflor\Cloudflare;
 
 
 use Cloudflare\API\Adapter\Guzzle;
-use Cloudflare\API\Auth\APIKey;
 use Illuminate\Support\ServiceProvider;
 
 class CloudflareServiceProvider extends ServiceProvider
@@ -24,7 +23,7 @@ class CloudflareServiceProvider extends ServiceProvider
         $this->app->singleton(
             APIKey::class,
             function ($app) use ($config) {
-                return new APIKey($config['email'], $config['api_token']);
+                return new APIKey($config['api_token']);
             }
         );
 
@@ -78,6 +77,11 @@ class CloudflareServiceProvider extends ServiceProvider
         );
     }
 
+    protected function configPath(): string
+    {
+        return __DIR__ . '/../config/cloudflare-villaflor.php';
+    }
+
     /**
      * Bootstrap any application services.
      *
@@ -85,11 +89,6 @@ class CloudflareServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([$this->configPath() => config_path('cloudflare-villaflor.php'), 'config']);
-    }
-
-    protected function configPath(): string
-    {
-        return __DIR__ . '/../config/cloudflare-villaflor.php';
+        $this->publishes([$this->configPath() => config_path('cloudflare-villaflor.php'),]);
     }
 }
