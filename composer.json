@@ -21,7 +21,8 @@
         "cloudflare/sdk": "^1.1"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.12"
+        "orchestra/testbench": "^6.13",
+      "ext-json": "*"
     },
     "autoload": {
         "psr-4": {
